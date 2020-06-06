@@ -1,0 +1,35 @@
+
+before_script:
+  - export ANDROID_HOME="$HOME/Library/Android/sdk"
+  - bundle install
+stages:
+  - build
+  - test
+  - quality_assurance
+  - deploy
+
+
+build_job:
+  stage: build
+  script:
+    - ./gradlew clean assembleRelease
+  artifacts:
+    paths:
+      - app/build/outputs/
+
+unit_tests:
+  stage: test
+  script:
+    - ./gradlew test
+  artifacts:
+    name: "reports_${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}"
+    when: on_failure
+    expire_in: 4 days
+    paths:
+      - app/build/reports/tests/
+
+deploy_internal:
+  stage: deploy
+  script:
+    - bundle exec fastlane android deploy_lane
+  when: manual
