@@ -10,4 +10,7 @@ jobs:
     steps:
       - checkout
       - run:
+          name: chmod premissions
+          command: chmod +x ./gradlew
+      - run:
           command: ./gradlew build
