@@ -8,6 +8,7 @@ public class AppTest {
 
     @Test
     void shouldReturnFactorial() {
-        assertEquals(0, Factorial.factorial(0));
+        assertEquals(1, Factorial.factorial(0));
+        assertEquals(24, Factorial.factorial(4));
     }
 }
